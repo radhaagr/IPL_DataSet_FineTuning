@@ -1,0 +1,20 @@
+replicaCount: 1
+image:
+  repository: youracr.azurecr.io/cricket-inference
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  - name: HF_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: hf-secret
+        key: token
+
+resources:
+  limits:
+    nvidia.com/gpu: 1
